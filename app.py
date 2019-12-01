@@ -27,7 +27,7 @@ tokens={}
    
 def valid_userinfo(s):
     for i in range(len(s)):
-        if (not ((s[i]>='A' and s[i] <= 'Z') or (s[i] >= 'a' and s[i] <= 'z') or (s[i]>='0' and s[i] <='9') or (s[i] == '_') or (s[i] == '!'))):
+        if (not ((s[i] == '@') or(s[i]>='A' and s[i] <= 'Z') or (s[i] >= 'a' and s[i] <= 'z') or (s[i]>='0' and s[i] <='9') or (s[i] == '_') or (s[i] == '!'))):
             return False
     return True
 
@@ -125,13 +125,14 @@ def login():
         username = fl.request.form['username']
         password = fl.request.form['password']
         twofa = fl.request.form['twofa'] 
+         
+        if (not(valid_userinfo(username) and valid_userinfo(password) and valid_userinfo(twofa))):
+            return fl.render_template('login_failure.html')
         users = c.execute("select username, password, twofa from users where username=?",(username,)).fetchall()
         print("login:",users)
         if (not users):
             return fl.render_template('login_failure.html')
         for a in users:
-            if (not(valid_userinfo(username) and valid_userinfo(password) and valid_userinfo(twofa))):
-                return fl.render_template('login_failure.html')
             if (username == a[0] and password == a[1]):
                 if (twofa != a[2]):
                     failinfo = "Two-factor failure"
