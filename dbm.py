@@ -13,7 +13,7 @@ def init_db(c):
     c.execute("drop table if exists logs;")
     c.execute("create table logs (username varchar(45), datetime varchar(60), action int, foreign key (username) references users(username));")
     
-    insert_user(c,"admin","123","123")
+    insert_user(c,"admin","Administrator@1","12345678901")
 
     print("init",fetch_users(c))
     print("initialized")
