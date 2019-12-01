@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Spell Check</h2><br>
+<p id="result"> success login </p><br>
+<form method="post">
+
+    text:
+    <br>
+    <textarea name="input" rows="10" cols="100" id="inputtext">
+    </textarea>
+    <br>
+    {% if csrftoken %}
+    <input type="hidden" name="CSRFToken" id="csrftoken" value = {{csrftoken}}><br>
+    {% endif %}
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
